@@ -16,10 +16,16 @@ In simple terms, it breaks [SRP][] and [ISP][]. In more depth:
     use [`SplObjectStorage `][] or similar, which adds complexity. All this puts a lot of unnecessary burden
     on the implementors, even if this is to support functionality that will never be used.
     
+### More Detail
+For a few years, the authors of this document made a few attempts to understand the architecture behind the Subject/Observer pair. Recently we tried again. We just could not imagine why someone would design this in the way it is documented.  "What were they even thinking?!", we thought.
+
+However, there is one scenario where this would be valid. That is, if the Subject represents a Hook, like the [`WP_Hook`][] class in WordPress. For example, in an event system where events are invoked with a name or code, a Hook could represent a named event in the system, and by calling `notify()` from outside, the dispatcher could notify observers. If this is the intended scenario, then the problems are mostly with naming: the name "Subject" implies that it is what is being observed, and the Observer pattern is different.
+    
 
 [`SplSubject`]: https://www.php.net/manual/en/class.splsubject.php
 [`SplSubject#notify()`]: https://www.php.net/manual/en/splsubject.notify.php
 [`SplSubject#detach()`]: https://www.php.net/manual/en/splsubject.detach.php
 [`SplObjectStorage `]: http://ir2.php.net/manual/en/class.splobjectstorage.php
+[`WP_Hook`]: https://github.com/WordPress/WordPress/blob/master/wp-includes/class-wp-hook.php
 [SRP]: https://en.wikipedia.org/wiki/Single_responsibility_principle
 [ISP]: https://en.wikipedia.org/wiki/Interface_segregation_principle
